@@ -1,0 +1,36 @@
+{% extends 'template.html' %} 
+{% block content %}
+<br/><br/><br/><br/><br/><br/>
+
+<div class="container mt-5 mb-5">
+    <center>
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="{{ product.name }}">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.name }}</h5>
+                  <p class="card-text">{{ product.description }}</p>
+                  {% if product.on_sale %}
+                    <div
+                        class="badge text-white position-absolute"
+                        style="top: 0.5rem; right: 0.5rem; background-color: rgb(180, 0, 0)">
+                        On Sale
+                    </div>
+                    <p class="card-text"><small class="text-body-secondary">Regular Price: <strike>${{ product.price }}</small></strike></p>
+                    <p class="card-text"><small class="text-body-secondary">Sale Price: ${{ product.sale_price }}</small></p>
+                  {% else %}
+                    <p class="card-text"><small class="text-body-secondary">${{ product.price }}</small></p>
+                  {% endif %}
+                  <button class="btn btn-dark mt-auto">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </center>
+</div>
+
+<br/><br/><br/><br/><br/><br/>
+{% endblock %}

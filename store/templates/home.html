@@ -1,0 +1,20 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block content %}
+  <body>
+    <header>
+      <div class="text-center text-white">
+        <h1 class="lead fw-normal text-black mb-0 mt-3">
+          Handbuilt Guitars and Basses. Made With Passion in Upstate NY, USA.
+        </h1>
+      </div>
+      <img src="{% static '../media/uploads/banner/banner.png' %}" alt="Lambda Guitars Banner" class="img-fluid">
+      <div class="container px-4 px-lg-5 my-5">
+        <center>
+           <a href="{% url 'all_products' %}"><button class="btn btn-dark btn-lg">Shop Now</button></a>
+        </center>
+      </div>
+    </header>
+  </body>
+{% endblock %}
