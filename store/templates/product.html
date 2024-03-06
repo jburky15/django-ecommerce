@@ -24,7 +24,7 @@
                   {% else %}
                     <p class="card-text"><small class="text-body-secondary">${{ product.price }}</small></p>
                   {% endif %}
-                  <button class="btn btn-dark mt-auto mb-5">Add to Cart</button>
+                  <button type="button" value="{{ product.id }}" id="add-cart" class="btn btn-secondary mt-auto mb-5">Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -32,5 +32,29 @@
           <a href="{% url 'all_products' %}"><button class="btn btn-dark mt-5 mb-5">Back to Shop</button></a>
     </center>
 </div>
+
+<script>
+  // Check if the button is pressed
+  $(document).on('click', '#add-cart', function(e){
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: '{% url 'cart_add' %}',
+      data: {
+        product_id: $('#add-cart').val(),
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        console.log(json)
+      },
+      error: function(xhr, errmsg, err){
+        console.log(xhr)
+        console.log(errmsg)
+        console.log(err)
+      }
+    });
+  });
+</script>
 
 {% endblock %}
