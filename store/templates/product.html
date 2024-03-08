@@ -46,7 +46,8 @@
         action: 'post'
       },
       success: function(json){
-        console.log(json)
+        // Display the cart count
+        document.getElementById('cart_count').innerHTML = json.count
       },
       error: function(xhr, errmsg, err){
         console.log(xhr)
