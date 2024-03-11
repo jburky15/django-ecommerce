@@ -13,6 +13,50 @@
         </div>
       </div>
     </header>
+    <br/>
+    <div class="container">
+     
+      {% if cart_products %}
+      {% for product in cart_products %}
+          <center>
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="{{ product.product_image.url }}" class="img-fluid rounded-start" alt="{{ product.name }}">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ product.name }}</h5>
+                      <p class="card-text">{{ product.description }}</p>
+                      {% if product.on_sale %}
+                        <div
+                            class="badge text-white position-absolute"
+                            style="top: 0.5rem; right: 0.5rem; background-color: rgb(180, 0, 0)">
+                            On Sale
+                        </div>
+                        <p class="card-text"><small class="text-body-secondary">Regular Price: <strike>${{ product.price }}</small></strike></p>
+                        <p class="card-text"><small class="text-body-secondary">Sale Price: ${{ product.sale_price }}</small></p>
+                      {% else %}
+                        <p class="card-text"><small class="text-body-secondary">${{ product.price }}</small></p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </center>
+          <br/>
+      {% endfor %}
+      <center>
+        <button type="button" class="btn btn-secondary mt-auto mb-5">Checkout</button>
+      </center>
+      {% else %}
+        <center>
+          <div class="card mb-3 mt-5" style="max-width: 540px;">
+            <h1>Your cart is empty</h1>
+          </div>
+        </center>
+      {% endif %}
+    </div>
   </body>
   <br/><br/><br/><br/><br/><br/>
 {% endblock %}
