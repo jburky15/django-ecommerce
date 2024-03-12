@@ -51,9 +51,10 @@
       </center>
       {% else %}
         <center>
-          <div class="card mb-3 mt-5" style="max-width: 540px;">
+          <div class="card mb-5 mt-5" style="max-width: 540px;">
             <h1>Your cart is empty</h1>
           </div>
+          <button type="button" class="btn btn-outline-success mt-5 mb-5"><a class="dropdown-item" href="{% url 'all_products' %}">Return to Shop</a></button>
         </center>
       {% endif %}
     </div>
