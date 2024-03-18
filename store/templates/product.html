@@ -24,6 +24,20 @@
                   {% else %}
                     <p class="card-text"><small class="text-body-secondary">${{ product.price }}</small></p>
                   {% endif %}
+                  <select class="form-select form-select-lg mb-3" aria-label="Large select example">
+                    <option selected>Color Option</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                  
+                  <select class="form-select form-select-sm mb-3" aria-label="Small select example">
+                    <option selected>Quantity</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                  
                   <button type="button" value="{{ product.id }}" id="add-cart" class="btn btn-secondary mt-auto mb-5">Add to Cart</button>
                 </div>
               </div>
@@ -32,14 +46,6 @@
           <a href="{% url 'all_products' %}"><button class="btn btn-dark mt-5 mb-5">Back to Shop</button></a>
     </center>
 </div>
-
-<footer class="py-5 bg-dark w-100" style="position: absolute; bottom: 0;">
-  <div class="container">
-    <p class="m-0 text-center text-white">
-      Copyright &copy; Lambda Guitars 2023
-    </p>
-  </div>
-</footer>
 
 <script>
   // Check if the button is pressed
