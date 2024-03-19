@@ -20,23 +20,20 @@
                         On Sale
                     </div>
                     <p class="card-text"><small class="text-body-secondary">Regular Price: <strike>${{ product.price }}</small></strike></p>
-                    <p class="card-text"><small class="text-body-secondary">Sale Price: ${{ product.sale_price }}</small></p>
+                    <h5 class="card-text">Sale Price: ${{ product.sale_price }}</h5>
                   {% else %}
-                    <p class="card-text"><small class="text-body-secondary">${{ product.price }}</small></p>
+                    <h5 class="card-text text-body-secondary">${{ product.price }}</h5>
                   {% endif %}
-                  <select class="form-select form-select-lg mb-3" aria-label="Large select example">
-                    <option selected>Color Option</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                  
-                  <select class="form-select form-select-sm mb-3" aria-label="Small select example">
-                    <option selected>Quantity</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+                  <div class="col-md-8">
+                    <div class="col-md-4">
+                      Quantity:
+                      <select class="form-select form-select-sm mb-4" id="quantity-select">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
+                    </div>
+                  </div>
                   
                   <button type="button" value="{{ product.id }}" id="add-cart" class="btn btn-secondary mt-auto mb-5">Add to Cart</button>
                 </div>
@@ -56,6 +53,7 @@
       url: '{% url 'cart_add' %}',
       data: {
         product_id: $('#add-cart').val(),
+        product_quantity: $('#quantity-select option:selected').text(),
         csrfmiddlewaretoken: '{{ csrf_token }}',
         action: 'post'
       },

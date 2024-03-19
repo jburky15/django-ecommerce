@@ -39,6 +39,24 @@
                       {% else %}
                         <p class="card-text"><small class="text-body-secondary">${{ product.price }}</small></p>
                       {% endif %}
+                      <div class="col-md-8">
+                        <div class="col-md-4">
+                          Quantity:
+                          <select class="form-select form-select-sm mb-4" id="quantity-select">
+
+                              {% for key, value in quantities.items %}
+                                {% if key == product.id|slugify %}
+                                  <option selected>{{ value }}</option>
+                                {% endif %}
+                              {% endfor %}
+
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                          </select>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
