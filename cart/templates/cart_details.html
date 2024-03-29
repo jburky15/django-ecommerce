@@ -42,27 +42,25 @@
                       <div class="col-md-8">
                         <div class="col-md-4">
                           Quantity:
-                          <select class="form-select form-select-sm mb-4" id="quantity-select">
-
+                          <select class="form-select form-select-sm mb-4" id="select{{ product.id }}">
                               {% for key, value in quantities.items %}
                                 {% if key == product.id|slugify %}
                                   <option selected>{{ value }}</option>
                                 {% endif %}
                               {% endfor %}
-
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                           </select>
                         </div>
                       </div>
-
+                      <button type="button" data-index="{{ product.id }}" class="btn btn-secondary mt-auto mb-5 update-cart">Update Cart</button>
                     </div>
                   </div>
                 </div>
               </div>
           </center>
-          <br/>
+        <br/>  
       {% endfor %}
       <center>
         <button type="button" class="btn btn-secondary mt-auto mb-5">Checkout</button>
@@ -79,3 +77,31 @@
   </body>
   <br/><br/><br/><br/><br/><br/>
 {% endblock %}
+
+<script>
+   // Check if the update button is pressed
+   $(document).on('click', '.update-cart', function(e){
+    e.preventDefault();
+    // Get the product id
+    var productid = $(this.data('index'))
+
+    $.ajax({
+      type: 'POST',
+      url: '{% url 'cart_update' %}',
+      data: {
+        product_id: $(this.data('index')),
+        product_quantity: $('#select' + productid + 'option:selected').text(),
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        location.reload();
+      },
+      error: function(xhr, errmsg, err){
+        console.log(xhr)
+        console.log(errmsg)
+        console.log(err)
+      }
+    });
+  });
+</script>
