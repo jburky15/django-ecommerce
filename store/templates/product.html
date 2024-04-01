@@ -1,67 +1,69 @@
-{% extends 'template.html' %} 
+{% extends 'template.html' %}
 {% block content %}
-<br/><br/><br/><br/><br/><br/>
+<br /><br /><br /><br /><br /><br />
 
 <div class="container mt-5 mb-5">
-    <center>
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
+  <center>
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{ product.product_image.url }}" class="img-fluid rounded-start" alt="{{ product.name }}">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            {% if product.on_sale %}
+            <div class="badge text-white position-absolute"
+              style="top: 0.5rem; right: 0.5rem; background-color: rgb(180, 0, 0)">
+              On Sale
+            </div>
+            <p class="card-text"><small class="text-body-secondary">Regular Price: <strike>${{ product.price
+                  }}</small></strike></p>
+            <h5 class="card-text">Sale Price: ${{ product.sale_price }}</h5>
+            {% else %}
+            <h5 class="card-text text-body-secondary">${{ product.price }}</h5>
+            {% endif %}
+            <div class="col-md-8">
               <div class="col-md-4">
-                <img src="{{ product.product_image.url }}" class="img-fluid rounded-start" alt="{{ product.name }}">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">{{ product.name }}</h5>
-                  <p class="card-text">{{ product.description }}</p>
-                  {% if product.on_sale %}
-                    <div
-                        class="badge text-white position-absolute"
-                        style="top: 0.5rem; right: 0.5rem; background-color: rgb(180, 0, 0)">
-                        On Sale
-                    </div>
-                    <p class="card-text"><small class="text-body-secondary">Regular Price: <strike>${{ product.price }}</small></strike></p>
-                    <h5 class="card-text">Sale Price: ${{ product.sale_price }}</h5>
-                  {% else %}
-                    <h5 class="card-text text-body-secondary">${{ product.price }}</h5>
-                  {% endif %}
-                  <div class="col-md-8">
-                    <div class="col-md-4">
-                      Quantity:
-                      <select class="form-select form-select-sm mb-4" id="quantity-select">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <button type="button" value="{{ product.id }}" id="add-cart" class="btn btn-secondary mt-auto mb-5">Add to Cart</button>
-                </div>
+                Quantity:
+                <select class="form-select form-select-sm mb-4" id="quantity-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
               </div>
             </div>
+            <button type="button" value="{{ product.id }}" id="add-cart" class="btn btn-secondary mt-auto mb-5">Add to
+              Cart</button>
           </div>
-          <a href="{% url 'all_products' %}"><button class="btn btn-dark mt-5 mb-5">Back to Shop</button></a>
-    </center>
+        </div>
+      </div>
+    </div>
+    <a href="{% url 'all_products' %}"><button class="btn btn-dark mt-5 mb-5">Back to Shop</button></a>
+  </center>
 </div>
 
 <script>
   // Check if the button is pressed
-  $(document).on('click', '#add-cart', function(e){
+  $(document).on('click', '#add-cart', function (e) {
     e.preventDefault();
     $.ajax({
       type: 'POST',
-      url: '{% url 'cart_add' %}',
+      url: "{% url 'cart_add' %}",
       data: {
         product_id: $('#add-cart').val(),
         product_quantity: $('#quantity-select option:selected').text(),
         csrfmiddlewaretoken: '{{ csrf_token }}',
         action: 'post'
       },
-      success: function(json){
+      success: function (json) {
         // Display the cart count
         document.getElementById('cart_count').innerHTML = json.count
+        // Send user to cart page
+        window.location.href = "{% url 'cart' %}"
       },
-      error: function(xhr, errmsg, err){
+      error: function (xhr, errmsg, err) {
         console.log(xhr)
         console.log(errmsg)
         console.log(err)
